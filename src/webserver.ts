@@ -1,40 +1,80 @@
-import { Application,send ,Router } from "https://deno.land/x/oak@v6.4.0/mod.ts";
+import { Application, Router, send } from "https://deno.land/x/oak@v6.4.0/mod.ts";
 import { Session } from "https://deno.land/x/session@1.1.0/mod.ts";
-import { Person } from "./common/types.ts";
+import { Product, ShoppingCart } from "./common/types.ts";
 
+const app = new Application();
+const router = new Router();
 
-// Session konfigurieren und starten
 const session = new Session({ framework: "oak" });
 await session.init();
 
-const persons: Person[] = [
-    { id: "p01", firstName: "Hans", lastName: "Maulwurf" }
-];
+const products:Product[] = JSON.parse(await Deno.readTextFile(`src/frontend/assets/products.json`));
 
-const app = new Application();
-
-const router = new Router();
-
-router
-.get("/", cxt => {
-    return send(cxt, "/frontend/shop.html"); 
-})
-    .get("/api/persons", context => {
-        context.response.body = persons;
+router 
+    //HTML
+    .get("/", async (context) => {
+        await send(context, "/src/frontend/index.html");
     })
-    .get("/api/persons/:id", async ctx => {
-        ctx.response.body = persons
-            .find(p => p.id == ctx.params.id);
-    });
+    .get("/product/:id", async (context) => {
+        await send(context, "/src/frontend/index.html");
+    })
+    .get("/shoppingcart", async (context) => {
+        await send(context, "/src/frontend/index.html");
+    })
+    .get("/checkout", async (context) => {
+        await send(context, "/src/frontend/index.html");
+    })
 
-app.use(session.use()(session));
-app.use(async cxt=>{
-    await send(cxt,cxt.request.url.pathname,{ 
-        root: `${Deno.cwd()}src/frontend`,
-        index: "shop.html"
+    //Assets
+    .get("/:mainfolder/:folder/:file", async (context) => {
+        await send(context, "/src/frontend/" + context.params.mainfolder+ "/" + context.params.folder + "/" + context.params.file);
+    })
 
-    });
-});
+    //API
+    .get("/api/products", async (context) => {
+        await send(context, "/src/frontend/assets/products.json");
+    })
+    .post("/api/shoppingcart/:id", async (context) => {
+        const product = products.find(x => Number(x.id) === Number(context.params.id));
 
-console.log("Server running on http://localhost:8000");
+        if (!product) {
+            context.response.status = 404;
+            return;
+        }
+
+        if (await context.state.session.get("shoppingcart") == undefined) {
+            await context.state.session.set("shoppingcart", new ShoppingCart());
+        }
+
+        let shoppingcart:ShoppingCart = await context.state.session.get("shoppingcart");
+
+        await context.state.session.set("shoppingcart", [...shoppingcart.allProducts, product]);
+
+        context.response.status = 200;
+    })
+    .post("/api/shoppingcart", async (context) => {
+        let cart = await context.request.body({ type: "json" }).value;
+        await context.state.session.set("shoppingcart", cart);
+
+        context.response.status = 200
+        context.response.body = { message: 'OK' }
+    })
+    .get("/api/shoppingcart", async (context) => {
+        let cart = await context.state.session.get("shoppingcart");
+
+        if (cart == undefined) {
+            context.response.body = undefined;
+        } else {
+            context.response.body = cart;
+        }
+        context.response.status = 200;
+    })
+    .post("/api/order", async (context) => {
+        context.response.status = 200
+        context.response.body = { message: 'OK' }
+    })
+
+app.use(<any>session.use()(session));
+app.use(router.routes());
 app.listen({ port: 8000 });
+console.log("Server running on http://localhost:8000");

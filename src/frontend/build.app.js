@@ -101,10 +101,35 @@ let System, __instantiate;
 
 System.register("common/types", [], function (exports_1, context_1) {
     "use strict";
+    var Product, ShoppingCart;
     var __moduleName = context_1 && context_1.id;
     return {
         setters: [],
         execute: function () {
+            Product = class Product {
+                constructor(id, productName, specialOffer, normalPrice, imageName, description) {
+                    this.id = id;
+                    this.productName = productName;
+                    this.specialOffer = specialOffer;
+                    this.normalPrice = normalPrice;
+                    this.imageName = imageName;
+                    this.description = description;
+                }
+            };
+            exports_1("Product", Product);
+            ShoppingCart = class ShoppingCart {
+                constructor() {
+                    this.allProducts = new Array();
+                }
+                getTotalPrice() {
+                    let price = 0;
+                    this.allProducts.forEach(product => {
+                        price += product.specialOffer || product.normalPrice;
+                    });
+                    return price;
+                }
+            };
+            exports_1("ShoppingCart", ShoppingCart);
         }
     };
 });
