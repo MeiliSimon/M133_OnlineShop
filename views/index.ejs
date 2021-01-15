@@ -1,0 +1,29 @@
+<%- await include('views/header.ejs', { title: 'Home' }) %> <%- await
+include('views/head.ejs') %>
+<h2>Produkte</h2>
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-4 productRow">
+  <% products.forEach(product=> { %>
+  <div class="col py-lg-2">
+    <div class="card">
+      <img class="card-img-top" src="/img/<%= product.imageName %>" />
+      <div class="card-body">
+        <h5 class="card-title"><%= product.productName %></h5>
+        <% if(product.specialOffer==null){ %>
+        <p style="font-size: large; font-weight: 600">
+          CHF <%= product.normalPrice.toFixed(2) %>
+        </p>
+        <% } else{ %>
+        <p style="font-size: large">
+          CHF <%= product.specialOffer.toFixed(2) %>
+          <s style="font-size: medium" class="text-danger"
+            >CHF <%= product.normalPrice.toFixed(2) %></s
+          >
+        </p>
+        <% } %>
+        <a class="btn btn-primary" href="/product/<%= product.id %>">details</a>
+      </div>
+    </div>
+  </div>
+  <% });%>
+</div>
+<%- await include('views/footer.ejs') %>

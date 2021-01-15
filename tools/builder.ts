@@ -1,5 +1,3 @@
-const [diagnostics, emit] = await Deno.bundle(
-    "./src/frontend/app.ts",
-);
+const [diagnostics, emit] = await Deno.bundle("./appCart.ts");
 
-await Deno.writeTextFile("./src/frontend/build.app.js", emit);
+await Deno.writeTextFile("./assets/js/appCart.js", emit);

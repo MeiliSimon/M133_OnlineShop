@@ -1,0 +1,29 @@
+<%- await include('views/header.ejs', { title: 'Cart' }) %>
+  <%- await include('views/head.ejs') %>
+    <h2>Cart</h2>
+    <div class="row cartRow">
+      <div class="col col-5">
+        <p>Produktname</p>
+      </div>
+      <div class="col col-2">
+        <p>Preis</p>
+      </div>
+      <div class="col col-3">
+        <p>Anzahl</p>
+      </div>
+      <div class="col col-2">
+        <p>Total</p>
+      </div>
+    </div>
+    <div id="cart">
+    </div>
+    <div class="row">
+      <a class="btn btn-outline-secondary btnCart m-2" href="/">weiter einkaufen</a>
+      <a class="btn btn-outline-primary btnCart m-2" href="checkout">Checkout</a>
+    </div>
+    </div>
+    <script type="module">
+      import { loadCart } from "./js/appCart.js";
+      loadCart();
+    </script>
+    <%- await include('views/footer.ejs') %>

@@ -1,0 +1,28 @@
+<%- await include('views/header.ejs', { title: 'Checkout' }) %> <%- await
+include('views/head.ejs') %>
+<div id="alert"></div>
+<h2>Checkout</h2>
+<form
+  id="checkoutForm"
+  name="checkoutForm"
+  class="validate"
+  onsubmit="checkout()"
+>
+  <div class="mb-2">
+    <label for="email" class="form-label">Email</label>
+    <input id="email" name="email" type="email" required />
+  </div>
+  <div class="mb-2">
+    <label for="vorname" class="form-label">Vorname</label>
+    <input id="vorname" name="vorname" type="text" required />
+  </div>
+  <div class="mb-2">
+    <label for="nachname" class="form-label">Nachname</label>
+    <input id="nachname" name="nachname" type="text" required />
+  </div>
+  <button id="submitButton" type="submit" class="btn btn-primary" disabled>
+    Bestellung abschliessen
+  </button>
+</form>
+<script src="./js/appCheckout.js"></script>
+<%- await include('views/footer.ejs') %>

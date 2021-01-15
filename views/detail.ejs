@@ -1,0 +1,28 @@
+<%- await include('views/header.ejs', { title: 'Detail' }) %> <%- await
+include('views/head.ejs') %>
+<h2><a href="/">Produkte</a>/Detail</h2>
+<div class="row row-cols-1 row-cols-md-2 g-2">
+  <div class="col">
+    <img class="card-img" src="/img/<%= product.imageName %>" />
+  </div>
+  <div class="col">
+    <h5><%= product.productName %></h5>
+    <p><%= product.description %></p>
+    <% if(product.specialOffer==null){ %>
+    <p style="font-size: large; font-weight: 600">
+      CHF <%= product.normalPrice.toFixed(2) %>
+    </p>
+    <% } else{ %>
+    <p style="font-size: large; font-weight: 600">
+      CHF <%= product.specialOffer.toFixed(2) %>
+      <s style="font-size: large" class="text-danger"
+        >CHF <%= product.normalPrice.toFixed(2) %></s
+      >
+    </p>
+    <% } %>
+    <button class="btn btn-primary" onclick="addToCart('<%= product.id %>')">
+      Zum Warenkorb hinzufügen
+    </button>
+  </div>
+</div>
+<%- await include('views/footer.ejs') %>
