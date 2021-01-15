@@ -1,0 +1,74 @@
+nav {
+    background: linear-gradient(0deg,
+            rgba(255, 255, 255, 1) 0%,
+            rgb(166, 75, 202) 13%) !important;
+}
+
+.navbar-brand {
+    margin-right: 0;
+}
+
+footer {
+    height: 60px;
+    background: linear-gradient(180deg,
+            rgba(255, 255, 255, 1) 0%,
+            rgba(166, 75, 202) 13%);
+}
+
+.my-8 {
+    margin: 10rem 0rem;
+}
+
+.btn .badge {
+    top: -10px;
+    left: -15px;
+    color: white;
+}
+
+.productRow {
+    margin-bottom: 4rem;
+}
+
+.cartRow {
+    height: 32px;
+    border-bottom: 1px solid black;
+    margin-bottom: 14px;
+}
+
+.cartCount {
+    margin: 0px 12px;
+}
+
+.countBtn {
+    padding: 0;
+    height: 36px;
+    width: 24px;
+}
+
+.card {
+    border: none;
+}
+
+.countText {
+    margin: 0 4px;
+}
+
+#cart .row {
+    margin-bottom: 4px;
+}
+
+#total {
+    font-weight: bold;
+}
+
+input {
+    display: block;
+}
+
+img {
+    max-width: 380px;
+}
+
+.btnCart {
+    width: 200px;
+}
