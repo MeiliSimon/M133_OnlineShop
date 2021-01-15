@@ -1,7 +1,7 @@
 nav {
     background: linear-gradient(0deg,
             rgba(255, 255, 255, 1) 0%,
-            rgb(166, 75, 202) 13%) !important;
+            rgb(75, 202, 149) 13%) !important;
 }
 
 .navbar-brand {
@@ -12,7 +12,7 @@ footer {
     height: 60px;
     background: linear-gradient(180deg,
             rgba(255, 255, 255, 1) 0%,
-            rgba(166, 75, 202) 13%);
+            rgb(75, 202, 138) 13%);
 }
 
 .my-8 {
